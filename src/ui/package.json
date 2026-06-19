@@ -1,0 +1,39 @@
+{
+  "name": "boston-utils-ui",
+  "version": "0.1.0",
+  "description": "Utility data explorer for properties owned by the City of Boston.",
+  "main": "vue.config.js",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonitonellc/boston-utils.git"
+  },
+  "keywords": [
+    "boston",
+    "massachusetts",
+    "bos",
+    "data",
+    "bigquery",
+    "utility",
+    "city"
+  ],
+  "author": "Toni Noble (toni@tonitoned.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tonitonellc/boston-utils/issues"
+  },
+  "homepage": "https://github.com/tonitonellc/boston-utils#readme",
+  "devDependencies": {
+    "@vue/cli-service": "^5.0.9",
+    "vue-template-compiler": "^2.7.16"
+  },
+  "dependencies": {
+    "chart.js": "^4.5.1",
+    "leaflet": "^1.9.4",
+    "vue": "^3.5.26"
+  }
+}
