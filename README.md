@@ -1,3 +1,10 @@
+# BostonData.info [BETA!]
+
+[We're live!](https://bostondata.info) 
+
+BostonData.info leverages public data surfaced by the City of Boston 
+via their CKAN API. 
+
 ### Running locally
 
 Available `just` commands:
