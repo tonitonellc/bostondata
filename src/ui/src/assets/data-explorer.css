@@ -1458,3 +1458,344 @@ body.dark-mode .drilldown:hover {
   color: #a5b4fc;
   background-color: rgba(129, 140, 248, 0.12);
 }
+
+/* ==========================================================================
+   Explore Map
+   ========================================================================== */
+.explore-view {
+  margin-bottom: 2rem;
+}
+
+.explore-header {
+  margin-bottom: 1.25rem;
+}
+
+.explore-map-wrapper {
+  position: relative;
+  width: 100%;
+  height: min(72vh, 680px);
+  min-height: 440px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.explore-map-container {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.explore-map-container .leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* Search this area — reuses .search-btn colors, positioned over the map */
+.explore-search-area {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.explore-search-area:hover {
+  transform: translateX(-50%) translateY(-1px);
+}
+
+/* Legend / dataset toggles */
+.explore-legend {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  width: 210px;
+  max-height: calc(100% - 2rem);
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 0.6rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.explore-legend-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #2c3e50;
+  padding: 0.15rem 0.35rem 0.4rem;
+}
+
+.explore-legend-total {
+  font-weight: 500;
+  font-size: 0.72rem;
+  color: #6c757d;
+}
+
+.explore-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.35rem;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: #2c3e50;
+  text-align: left;
+  transition: background-color 0.15s;
+  min-height: 0;
+}
+
+.explore-legend-item:hover {
+  background-color: #f1f3f5;
+}
+
+.explore-legend-item.is-off {
+  opacity: 0.42;
+}
+
+.explore-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1.5px solid #ffffff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.explore-legend-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.explore-legend-count {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.explore-legend-status {
+  font-size: 0.72rem;
+  color: #667eea;
+  padding: 0.35rem;
+}
+
+/* Status banner */
+.explore-banner {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #dee2e6;
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.82rem;
+  color: #2c3e50;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  max-width: calc(100% - 2rem);
+  text-align: center;
+}
+
+.explore-banner-error {
+  color: #c0392b;
+  border-color: #f5c6cb;
+}
+
+/* Detail panel */
+.explore-detail {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 1001;
+  width: 320px;
+  max-width: calc(100% - 2rem);
+  max-height: calc(100% - 2rem);
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1rem 1rem 1.1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+}
+
+.explore-detail-close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  min-height: 0;
+}
+
+.explore-detail-close:hover {
+  color: #2c3e50;
+}
+
+.explore-detail-tag {
+  display: inline-block;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  margin-bottom: 0.5rem;
+}
+
+.explore-detail-title {
+  color: #2c3e50;
+  font-size: 1.02rem;
+  margin: 0 0 0.2rem;
+  padding-right: 1.2rem;
+  line-height: 1.35;
+}
+
+.explore-detail-subtitle {
+  color: #6c757d;
+  font-size: 0.82rem;
+  margin: 0 0 0.75rem;
+}
+
+.explore-detail-list {
+  margin: 0 0 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.explore-detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.explore-detail-row dt {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #adb5bd;
+}
+
+.explore-detail-row dd {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #2c3e50;
+  word-break: break-word;
+}
+
+.explore-detail-link {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .explore-map-wrapper {
+    height: 70vh;
+    min-height: 400px;
+  }
+
+  .explore-legend {
+    width: 160px;
+    padding: 0.45rem;
+  }
+
+  .explore-legend-item {
+    font-size: 0.76rem;
+  }
+
+  .explore-detail {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    width: auto;
+    max-height: 55%;
+  }
+}
+
+/* Dark mode */
+body.dark-mode .explore-map-wrapper {
+  border-color: #334155;
+}
+
+body.dark-mode .explore-legend,
+body.dark-mode .explore-banner {
+  background: rgba(30, 41, 59, 0.97);
+  border-color: #334155;
+}
+
+body.dark-mode .explore-legend-title,
+body.dark-mode .explore-legend-item {
+  color: #f1f5f9;
+}
+
+body.dark-mode .explore-legend-item:hover {
+  background-color: #263244;
+}
+
+body.dark-mode .explore-legend-total,
+body.dark-mode .explore-legend-count {
+  color: #94a3b8;
+}
+
+body.dark-mode .explore-legend-status {
+  color: #818cf8;
+}
+
+body.dark-mode .explore-banner {
+  color: #f1f5f9;
+}
+
+body.dark-mode .explore-banner-error {
+  color: #f87171;
+  border-color: #7f1d1d;
+}
+
+body.dark-mode .explore-detail {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-mode .explore-detail-close {
+  color: #94a3b8;
+}
+
+body.dark-mode .explore-detail-close:hover {
+  color: #f1f5f9;
+}
+
+body.dark-mode .explore-detail-title,
+body.dark-mode .explore-detail-row dd {
+  color: #f1f5f9;
+}
+
+body.dark-mode .explore-detail-subtitle {
+  color: #94a3b8;
+}
+
+body.dark-mode .explore-detail-row dt {
+  color: #64748b;
+}

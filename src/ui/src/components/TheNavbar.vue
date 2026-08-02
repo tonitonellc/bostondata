@@ -15,6 +15,8 @@
       <div class="nav-links" :class="{ open: menuOpen }">
         <button @click="navigate('home')" :class="{ active: modelValue === 'home' }">Home</button>
 
+        <button @click="navigate('explore-map')" :class="{ active: modelValue === 'explore-map' }">Explore Map</button>
+
         <div class="nav-section">
           <button class="nav-section-header" @click.stop="toggleSection('fiscal')">
             <span class="chevron">{{ expandedSections.fiscal ? '▼' : '▶' }}</span>
