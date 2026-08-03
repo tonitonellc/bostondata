@@ -277,6 +277,8 @@ async function runGeocodeOverlay(bounds) {
   try {
     const sampleSize = Math.min(perDatasetLimit.value, GEOCODE_SAMPLE_CAP)
     for (const ds of GEOCODE_DATASETS) {
+      if (signal.aborted) return
+
       let records = []
       try {
         records = await fetchGeocodeSample(ds, sampleSize, signal)
@@ -285,6 +287,11 @@ async function runGeocodeOverlay(bounds) {
         continue
       }
 
+      // Geocode the entire sample for this dataset BEFORE touching the UI.
+      // The dataset is only revealed once its geocoding is fully done and it
+      // has at least one in-bounds pin — so it never flickers in at a count of
+      // 0 or with a partial, growing count while work is still in progress.
+      const found = []
       for (const record of records) {
         if (signal.aborted) return
         const address = ds.address(record)
@@ -302,10 +309,19 @@ async function runGeocodeOverlay(bounds) {
         )
           continue
 
-        allMarkers.push({ key: ds.key, marker: makeMarker(ds, coords.lat, coords.lon, record) })
-        counts.value = { ...counts.value, [ds.key]: (counts.value[ds.key] || 0) + 1 }
-        renderMarkers()
+        found.push({ coords, record })
       }
+
+      if (signal.aborted) return
+      if (found.length === 0) continue
+
+      // Commit the finished dataset in one shot: add all its markers, set its
+      // count, and render. This is what adds it to the legend.
+      for (const { coords, record } of found) {
+        allMarkers.push({ key: ds.key, marker: makeMarker(ds, coords.lat, coords.lon, record) })
+      }
+      counts.value = { ...counts.value, [ds.key]: found.length }
+      renderMarkers()
     }
   } finally {
     if (!signal.aborted) overlayLoading.value = false

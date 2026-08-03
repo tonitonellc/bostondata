@@ -1463,18 +1463,27 @@ body.dark-mode .drilldown:hover {
    Explore Map
    ========================================================================== */
 .explore-view {
-  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  /* Fill the viewport below the 70px navbar so the map doesn't leave a large
+     empty gap above the footer. */
+  height: calc(100vh - 70px);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 2rem;
+  box-sizing: border-box;
 }
 
 .explore-header {
-  margin-bottom: 1.25rem;
+  flex-shrink: 0;
+  margin-bottom: 1rem;
 }
 
 .explore-map-wrapper {
   position: relative;
+  flex: 1 1 auto;
   width: 100%;
-  height: min(72vh, 680px);
-  min-height: 440px;
+  min-height: 380px;
   border: 1px solid #dee2e6;
   border-radius: 8px;
   overflow: hidden;
@@ -1750,7 +1759,13 @@ body.dark-mode .drilldown:hover {
 }
 
 @media (max-width: 768px) {
+  .explore-view {
+    height: auto;
+    padding: 1rem;
+  }
+
   .explore-map-wrapper {
+    flex: none;
     height: 70vh;
     min-height: 400px;
   }
