@@ -4,7 +4,9 @@
       <h1>Explore Map</h1>
       <p class="subtitle">
         Records from across Boston&apos;s public datasets, aggregated for the area you&apos;re viewing.
-        Pan or zoom the map and press <b>Search This Area</b> to refresh. Select a pin for details.
+        Datasets appear in the legend as their pins load. Pan or zoom the map and press
+        <b>Search This Area</b> to refresh, or adjust how many records to show per dataset.
+        Select a pin for details.
       </p>
     </div>
 
@@ -27,6 +29,20 @@
           Datasets
           <span class="explore-legend-total">{{ totalPins }} pin{{ totalPins === 1 ? '' : 's' }}</span>
         </div>
+
+        <div class="explore-legend-controls">
+          <label for="explore-limit">Max per dataset</label>
+          <select
+            id="explore-limit"
+            class="explore-limit-select"
+            v-model.number="perDatasetLimit"
+            :disabled="loading"
+            @change="searchArea"
+          >
+            <option v-for="opt in LIMIT_OPTIONS" :key="opt" :value="opt">{{ opt }}</option>
+          </select>
+        </div>
+
         <button
           v-for="ds in datasetsForLegend"
           :key="ds.key"
@@ -39,7 +55,12 @@
           <span class="explore-legend-label">{{ ds.label }}</span>
           <span class="explore-legend-count">{{ ds.count }}</span>
         </button>
-        <div v-if="overlayLoading" class="explore-legend-status">Geocoding more datasets…</div>
+
+        <div v-if="loading" class="explore-legend-status">Loading datasets…</div>
+        <div v-else-if="datasetsForLegend.length === 0" class="explore-legend-status">
+          No records in this area yet.
+        </div>
+        <div v-else-if="overlayLoading" class="explore-legend-status">Searching more datasets…</div>
       </div>
 
       <!-- Loading / error banners -->
@@ -88,8 +109,10 @@ import { fetchCoordinateDataset, fetchGeocodeSample, geocode } from '../utils/ex
 import { useMapDisplay } from '../utils/mapUtils'
 
 const MAP_ID = 'explore-map'
-const PER_DATASET_LIMIT = 100
-const GEOCODE_SAMPLE = 12
+const LIMIT_OPTIONS = [25, 50, 100, 200, 500]
+// Geocoding is slow (throttled) and unreliable, so we only ever attempt a small
+// recent sample per address-only dataset regardless of the display limit.
+const GEOCODE_SAMPLE_CAP = 15
 const GEOCODE_THROTTLE_MS = 1100
 
 const { mapInstance, isMapReady, initializeMap, invalidateSize, destroyMap } = useMapDisplay(MAP_ID)
@@ -100,6 +123,7 @@ const error = ref('')
 const showSearchArea = ref(false)
 const selected = ref(null)
 const counts = ref({})
+const perDatasetLimit = ref(100)
 const activeKeys = ref(new Set(ALL_DATASETS.map((d) => d.key)))
 
 let L = null
@@ -110,8 +134,12 @@ let overlayAbort = null
 let lastSearchCenter = null
 let lastSearchZoom = DEFAULT_ZOOM
 
+// Only surface datasets that actually returned pins. Coordinate datasets show
+// up as soon as the area search resolves; address-only datasets pop in later,
+// once geocoding produces at least one in-bounds result — so nothing ever sits
+// in the list at a count of 0.
 const datasetsForLegend = computed(() =>
-  ALL_DATASETS.map((d) => ({
+  ALL_DATASETS.filter((d) => (counts.value[d.key] || 0) > 0).map((d) => ({
     key: d.key,
     label: d.label,
     color: d.color,
@@ -208,7 +236,7 @@ async function searchArea() {
     const results = await Promise.all(
       COORDINATE_DATASETS.map(async (ds) => {
         try {
-          const pts = await fetchCoordinateDataset(ds, bounds, PER_DATASET_LIMIT, searchAbort.signal)
+          const pts = await fetchCoordinateDataset(ds, bounds, perDatasetLimit.value, searchAbort.signal)
           return { ds, pts }
         } catch (e) {
           if (e.name === 'AbortError') throw e
@@ -247,10 +275,11 @@ async function runGeocodeOverlay(bounds) {
   overlayLoading.value = true
 
   try {
+    const sampleSize = Math.min(perDatasetLimit.value, GEOCODE_SAMPLE_CAP)
     for (const ds of GEOCODE_DATASETS) {
       let records = []
       try {
-        records = await fetchGeocodeSample(ds, GEOCODE_SAMPLE, signal)
+        records = await fetchGeocodeSample(ds, sampleSize, signal)
       } catch (e) {
         if (e.name === 'AbortError') return
         continue

@@ -1543,6 +1543,43 @@ body.dark-mode .drilldown:hover {
   color: #6c757d;
 }
 
+.explore-legend-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.15rem 0.35rem 0.5rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.explore-legend-controls label {
+  font-size: 0.75rem;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+.explore-limit-select {
+  font-size: 0.78rem;
+  color: #2c3e50;
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 0.25rem 0.4rem;
+  cursor: pointer;
+}
+
+.explore-limit-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.explore-limit-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .explore-legend-item {
   display: flex;
   align-items: center;
@@ -1748,8 +1785,27 @@ body.dark-mode .explore-banner {
 }
 
 body.dark-mode .explore-legend-title,
-body.dark-mode .explore-legend-item {
+  body.dark-mode .explore-legend-item {
   color: #f1f5f9;
+  }
+
+body.dark-mode .explore-legend-controls {
+  border-bottom-color: #334155;
+}
+
+body.dark-mode .explore-legend-controls label {
+  color: #94a3b8;
+}
+
+body.dark-mode .explore-limit-select {
+  color: #f1f5f9;
+  background-color: #0f172a;
+  border-color: #334155;
+}
+
+body.dark-mode .explore-limit-select:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.25);
 }
 
 body.dark-mode .explore-legend-item:hover {
