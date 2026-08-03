@@ -87,6 +87,7 @@
         </div>
       </div>
 
+      <ExploreMapView   v-if="view === 'explore-map'" />
       <AnnualReportsView  v-if="view === 'annual-reports'" />
       <UtilityBillsView v-if="view === 'utili-see'" />
       <LobbyingView     v-if="view === 'lobbying'" />
@@ -118,6 +119,7 @@ import CodeViolationsView from './views/CodeViolationsView.vue'
 import CrimeView from './views/CrimeView.vue'
 import EarningsView from './views/EarningsView.vue'
 import EntertainmentLicensesView from './views/EntertainmentLicensesView.vue'
+import ExploreMapView from './views/ExploreMapView.vue'
 import FireView from './views/FireView.vue'
 import FoodInspectionsView from './views/FoodInspectionsView.vue'
 import LobbyingView from './views/LobbyingView.vue'
@@ -138,11 +140,20 @@ onMounted(() => {
     }
   } catch (e) {}
 
-  const hashStr = window.location.hash.replace('#', '')
-  const viewName = hashStr.split('?')[0]
-  const validViews = ['home', 'annual-reports', 'utili-see', 'lobbying', 'earnings', 'spending', 'crime', 'fire', 'threeoneone', 'snow', 'stops', 'permits', 'food', 'violations', 'cannabis', 'entertainment']
-  if (validViews.includes(viewName)) {
-    view.value = viewName
+  const validViews = ['home', 'explore-map', 'annual-reports', 'utili-see', 'lobbying', 'earnings', 'spending', 'crime', 'fire', 'threeoneone', 'snow', 'stops', 'permits', 'food', 'violations', 'cannabis', 'entertainment']
+
+  const applyHash = () => {
+    const hashStr = window.location.hash.replace('#', '')
+    const viewName = hashStr.split('?')[0]
+    if (validViews.includes(viewName)) {
+      view.value = viewName
+    }
   }
+
+  applyHash()
+
+  // React to hash changes (e.g. the Explore Map's "view in explorer" links)
+  // so navigation works without a full reload.
+  window.addEventListener('hashchange', applyHash)
 })
 </script>
