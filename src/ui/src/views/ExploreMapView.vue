@@ -5,7 +5,7 @@
       <p class="subtitle">
         Records from across Boston&apos;s public datasets, aggregated for the area you&apos;re viewing.
         Datasets appear in the legend as their pins load. Pan or zoom the map and press
-        <b>Search This Area</b> to refresh, or adjust how many records to show per dataset.
+        <b>Search This Area</b> to refresh, or adjust how many records to show per dataset via the "Max per dataset" drop-down. Selecting a dataset from the key removes its pins from the map..
         Select a pin for details.
       </p>
     </div>
