@@ -9,6 +9,8 @@
 // `view` is the in-app hash route for that dataset's explorer page, used by the
 // pin detail panel's "View in explorer" link.
 
+import { encodeOp } from './urlFilters'
+
 const val = (v) => (v === null || v === undefined || v === '' || v === 'NULL' ? null : String(v))
 
 // Native-coordinate datasets — aggregated by map bounds server-side.
@@ -23,6 +25,9 @@ export const COORDINATE_DATASETS = [
     latField: 'Lat',
     lonField: 'Long',
     coordType: 'text',
+    // Priority list of valid explorer filter fields (matching the target
+    // view's fieldOptions) used to deep-link to this record.
+    linkFields: ['STREET', 'OFFENSE_DESCRIPTION', 'DISTRICT'],
     title: (r) => val(r.OFFENSE_DESCRIPTION) || 'Crime report',
     subtitle: (r) => val(r.STREET),
     details: (r) => [
@@ -42,6 +47,7 @@ export const COORDINATE_DATASETS = [
     latField: 'latitude',
     lonField: 'longitude',
     coordType: 'text',
+    linkFields: ['neighborhood', 'case_topic', 'case_status'],
     title: (r) => val(r.case_topic) || val(r.service_name) || '311 Request',
     subtitle: (r) => val(r.full_address) || val(r.neighborhood),
     details: (r) => [
@@ -62,6 +68,7 @@ export const COORDINATE_DATASETS = [
     latField: 'latitude',
     lonField: 'longitude',
     coordType: 'text',
+    linkFields: ['app_business_name', 'facility_zip_code', 'app_license_status'],
     title: (r) => val(r.app_business_name) || val(r.app_dba_name) || 'Cannabis facility',
     subtitle: (r) => val(r.facility_address),
     details: (r) => [
@@ -82,6 +89,7 @@ export const COORDINATE_DATASETS = [
     latField: 'y_latitude',
     lonField: 'x_longitude',
     coordType: 'numeric',
+    linkFields: ['address', 'worktype', 'status'],
     title: (r) => val(r.permittypedescr) || val(r.worktype) || 'Building permit',
     subtitle: (r) => [val(r.address), val(r.city)].filter(Boolean).join(', '),
     details: (r) => [
@@ -103,6 +111,7 @@ export const COORDINATE_DATASETS = [
     latField: 'latitude',
     lonField: 'longitude',
     coordType: 'text',
+    linkFields: ['violation_street', 'description', 'status'],
     title: (r) => val(r.description) || 'Code violation',
     subtitle: (r) =>
       [val(r.violation_street), val(r.violation_city)].filter(Boolean).join(', '),
@@ -132,6 +141,7 @@ export const GEOCODE_DATASETS = [
     color: '#0891b2',
     geocode: true,
     orderBy: 'resultdttm',
+    linkFields: ['businessname', 'city', 'violdesc'],
     address: (r) => [val(r.address), val(r.city), val(r.state)].filter(Boolean).join(', '),
     title: (r) => val(r.businessname) || 'Food establishment',
     subtitle: (r) => val(r.address),
@@ -152,6 +162,7 @@ export const GEOCODE_DATASETS = [
     color: '#dc2626',
     geocode: true,
     orderBy: 'alarm_date',
+    linkFields: ['street_name', 'neighborhood', 'incident_description'],
     address: (r) =>
       [
         [val(r.street_number), val(r.street_prefix), val(r.street_name), val(r.street_type)]
@@ -182,6 +193,7 @@ export const GEOCODE_DATASETS = [
     color: '#475569',
     geocode: true,
     orderBy: 'contact_date',
+    linkFields: ['street', 'circumstance', 'basis'],
     address: (r) => {
       const street = val(r.street)
       if (!street) return null
@@ -205,6 +217,7 @@ export const GEOCODE_DATASETS = [
     color: '#db2777',
     geocode: true,
     orderBy: 'issued',
+    linkFields: ['dba_name', 'neighborhood', 'city'],
     address: (r) =>
       [val(r.address), val(r.city) || 'Boston', val(r.state) || 'MA', val(r.zip)]
         .filter(Boolean)
@@ -222,6 +235,24 @@ export const GEOCODE_DATASETS = [
 ]
 
 export const ALL_DATASETS = [...COORDINATE_DATASETS, ...GEOCODE_DATASETS]
+
+// Build the in-app explorer hash for a specific record, e.g.
+//   crime?field=STREET&op=eq&val=WASHINGTON%20ST
+// The target explorer view reads these params on mount (useUrlSync) and applies
+// an exact-match filter, so the selected record is surfaced in its results.
+// Picks the first of the dataset's linkFields that the record actually has a
+// value for; falls back to the unfiltered explorer view when none is present.
+export function buildRecordLink(ds, record) {
+  const fields = ds.linkFields || []
+  for (const field of fields) {
+    const value = val(record[field])
+    if (value) {
+      const qs = new URLSearchParams({ field, op: encodeOp('='), val: value }).toString()
+      return `${ds.view}?${qs}`
+    }
+  }
+  return ds.view
+}
 
 // Default view: a small area of Boston centered near Boston Common.
 export const DEFAULT_CENTER = [42.3554, -71.0655]

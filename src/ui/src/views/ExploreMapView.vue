@@ -88,7 +88,7 @@
             </div>
           </template>
         </dl>
-        <button class="apply-btn explore-detail-link" @click="openExplorer(selected.dataset.view)">
+        <button class="apply-btn explore-detail-link" @click="openExplorer">
           View in {{ selected.dataset.label }} explorer →
         </button>
       </div>
@@ -104,6 +104,7 @@ import {
   DEFAULT_CENTER,
   DEFAULT_ZOOM,
   GEOCODE_DATASETS,
+  buildRecordLink,
 } from '../utils/exploreMapDatasets'
 import { fetchCoordinateDataset, fetchGeocodeSample, geocode } from '../utils/exploreMapData'
 import { useMapDisplay } from '../utils/mapUtils'
@@ -340,8 +341,11 @@ function onMoveEnd() {
   }
 }
 
-function openExplorer(view) {
-  window.location.hash = view
+function openExplorer() {
+  if (!selected.value) return
+  // Navigate to the dataset's explorer with an exact-match filter applied for
+  // the selected record, so it's surfaced when the explorer loads.
+  window.location.hash = buildRecordLink(selected.value.dataset, selected.value.record)
 }
 
 onMounted(async () => {
