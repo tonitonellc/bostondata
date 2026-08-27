@@ -2,6 +2,7 @@
 // Used by SpendingView (per-year explorer) and AnnualReportsView (multi-year aggregates).
 
 export const spendingYears = [
+  { label: 'FY2027', id: '7afd05bc-34ec-4a1c-b470-bf43ea584f81', yearInt: 2027 },
   { label: 'FY2026', id: 'd22fdd5c-7e4c-41b7-a3eb-dfc57a87b245', yearInt: 2026 },
   { label: 'FY2025', id: '84dfc1af-28bd-4f17-804a-9cc0c09a237e', yearInt: 2025 },
   { label: 'FY2024', id: '0b7c9c5f-d1c2-46e7-b738-6ab37a110eef', yearInt: 2024 },
