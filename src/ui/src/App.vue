@@ -49,6 +49,11 @@
                   <br><br>
                   Please submit feature requests and bug reports to <span class="developer-email"><a href="mailto:support@tonitone.zendesk.com">our support e-mail</a></span>.
                   <br><br>
+                  <b>August 27th, 2026 Release:</b><br>
+                  • Explore Map now available for exploring aggregated records across datasets. <br> 
+                  • Fiscal Year 2027 Spending data now available in Spending data explorer and 
+                    Annual Reports view. <br><br> 
+                  <details><summary>Previous Releases</summary><br>
                   <b>June 10th, 2026 Release:</b><br>
                   • Dark Mode toggle now available in footer. <br>
                   • Entertainment Licenses (annual, special, and one-time) can now be explored 
@@ -64,7 +69,6 @@
                   • Annual fiscal data comparison reports can now be generated from Fiscal 
                     & Admin > Annual Reports. <br>
                   • Improved record labeling in mobile view. <br><br> 
-                  <details><summary>Previous Releases</summary><br>
                   <b>May 5th, 2026 Release:</b><br>
                   • Addressed server errors when proxied Boston CKAN API requests take longer
                     than expected<br>
