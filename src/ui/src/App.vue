@@ -54,6 +54,21 @@
                   • Fiscal Year 2027 Spending data now available in Spending data explorer and 
                     Annual Reports view. <br><br> 
                   <details><summary>Previous Releases</summary><br>
+                  <b>June 10th, 2026 Release:</b><br>
+                  • Dark Mode toggle now available in footer. <br>
+                  • Entertainment Licenses (annual, special, and one-time) can now be explored 
+                    from Licenses & Permits > Entertainment Licenses.<br>  
+                  • Sharing and saving queries is now possible with URL parameters populating 
+                    search filters. <br> 
+                  • Location Map now displays pins for all locations within the first
+                    page of results. <br>
+                  • Records are now sorted in descending order by default, starting with 
+                    the most recent date, if available.<br>
+                  • Additional record details available for Food Inspections and Building
+                    Permits. <br>
+                  • Annual fiscal data comparison reports can now be generated from Fiscal 
+                    & Admin > Annual Reports. <br>
+                  • Improved record labeling in mobile view. <br><br> 
                   <b>May 5th, 2026 Release:</b><br>
                   • Addressed server errors when proxied Boston CKAN API requests take longer
                     than expected<br>
