@@ -64,6 +64,7 @@
             <button @click="navigate('permits')" :class="{ active: modelValue === 'permits' }">Building Permits</button>
             <button @click="navigate('cannabis')" :class="{ active: modelValue === 'cannabis' }">Cannabis Licensing</button>
             <button @click="navigate('entertainment')" :class="{ active: modelValue === 'entertainment' }">Entertainment Licenses</button>
+            <button @click="navigate('zoning')" :class="{ active: modelValue === 'zoning' }">Zoning Board Responses</button>
           </div>
         </div>
       </div>

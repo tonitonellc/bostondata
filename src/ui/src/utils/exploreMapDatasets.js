@@ -128,6 +128,27 @@ export const COORDINATE_DATASETS = [
       ['Status date', val(r.status_dttm)],
     ],
   },
+  {
+    key: 'zoning',
+    label: 'Zoning Board Responses',
+    view: 'zoning',
+    endpoint: '/api/boston-zoning',
+    resourceId: 'f9b736f2-60da-4240-b793-f9b498eb475e',
+    color: '#0d9488',
+    latField: 'Y latitude',
+    lonField: 'X longitude',
+    coordType: 'text',
+    linkFields: ['Address', 'Neighborhood', 'Permit application work type'],
+    title: (r) => val(r['Permit application work type']) || 'Zoning application',
+    subtitle: (r) => [val(r['Address']), val(r['Neighborhood'])].filter(Boolean).join(', '),
+    details: (r) => [
+      ['Address', val(r['Address'])],
+      ['Work type', val(r['Permit application work type'])],
+      ['Neighborhood', val(r['Neighborhood'])],
+      ['Permit issued', r['Permit issued'] ? 'Yes' : 'No'],
+      ['Filed', val(r['Permit application filing date'])],
+    ],
+  },
 ]
 
 // Address-only datasets — geocoded best-effort as a secondary overlay.

@@ -47,6 +47,7 @@ const fieldOptions = [
   { label: 'Status', value: 'status' },
   { label: 'Applicant', value: 'applicant' },
   { label: 'Address', value: 'address' },
+  { label: 'Permit Number', value: 'permitnumber' },
 ]
 
 const selectedField = ref(fieldOptions[0])

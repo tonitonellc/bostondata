@@ -589,6 +589,81 @@ type FoodInspectionRecord struct {
 	Location        string  `json:"location"`
 }
 
+// ZoningBoardResponseRecord represents a single entry in the Zoning Board of
+// Appeal Responses dataset.
+//
+// The datastore_search_sql endpoint casts every column to text, including
+// Postgres booleans — the ~30 approval/violation flag fields come back as
+// "t"/"f"/null rather than JSON booleans. types.FlexBool handles both
+// encodings, treating null as false (no violation / not applicable).
+type ZoningBoardResponseRecord struct {
+	ID                                int               `json:"_id"`
+	FullText                          *string           `json:"_full_text"`
+	Address                           string            `json:"Address"`
+	PermitApplicationNumber           string            `json:"Permit application number"`
+	PermitApplicationFilingDate       string            `json:"Permit application filing date"`
+	ZoningReviewApproved              types.FlexBool    `json:"Zoning review approved"`
+	StartedAppeal                     types.FlexBool    `json:"Started appeal"`
+	CompletedAppeal                   types.FlexBool    `json:"Completed appeal"`
+	PermitIssued                      types.FlexBool    `json:"Permit issued"`
+	PermitApplicationAbandoned        types.FlexBool    `json:"Permit application abandoned"`
+	PermitApplicationInactive         types.FlexBool    `json:"Permit application inactive"`
+	PermitIssuedDate                  *string           `json:"Permit issued date"`
+	DaysToPermitIssuance              types.FlexFloat64 `json:"Days to permit issuance"`
+	DaysAtZBA                         types.FlexFloat64 `json:"Days at ZBA"`
+	PermitApplicationHasADU           types.FlexBool    `json:"Permit application has ADU"`
+	PermitApplicationType             string            `json:"Permit application type"`
+	PermitApplicationWorkType         string            `json:"Permit application work type"`
+	InSquaresStreetsRezonedArea       types.FlexBool    `json:"In Squares + Streets rezoned area?"`
+	SquaresStreetsDistrictName        *string           `json:"Squares + Streets S district name"`
+	BeforeOrAfterRezoning             *string           `json:"Before or after rezoning?"`
+	WhichRezoning                     *string           `json:"Which rezoning?"`
+	RezoningEffectiveDate             *string           `json:"Rezoning effective date"`
+	ChildCareBusinessPermitted        types.FlexBool    `json:"Child care business permitted where previously not allowed?"`
+	NumberOfChildrenChildCareEligible types.FlexFloat64 `json:"Number of children child care is eligible to serve"`
+	ResidentialUnitsBefore            types.FlexFloat64 `json:"Residential units before permitted work-on and after Oct. 2024"`
+	ResidentialUnitsAfter             types.FlexFloat64 `json:"Residential units after permitted work-on and after Oct. 2024"`
+	IsArticle80                       types.FlexBool    `json:"Is Article 80?"`
+	IsArticle80SmallProject           types.FlexBool    `json:"Is Article 80 small project?"`
+	IsArticle80LargeProject           types.FlexBool    `json:"Is Article 80 large project?"`
+	CityCouncilDistrict               string            `json:"City Council district"`
+	ZoningReliefType                  *string           `json:"Zoning relief type"`
+	TotalCommonViolations             types.FlexFloat64 `json:"Total common violations"`
+	ViolationExistingBuildingAlign    types.FlexBool    `json:"Violation for existing building alignment"`
+	ViolationRoofRestriction          types.FlexBool    `json:"Violation for roof restriction"`
+	ViolationAccessoryParkingUse      types.FlexBool    `json:"Violation for accessory parking use"`
+	ViolationParkingDesignManeuver    types.FlexBool    `json:"Violation for parking design and maneuverability"`
+	ViolationInsufficientParking      types.FlexBool    `json:"Violation for insufficient parking or loading"`
+	ViolationInsufficientLotWidth     types.FlexBool    `json:"Violation for insufficient lot width"`
+	ViolationInsufficientAddlLotArea  types.FlexBool    `json:"Violation for insufficient additional lot area"`
+	ViolationInsufficientLotArea      types.FlexBool    `json:"Violation for insufficient lot area"`
+	ViolationInsufficientLotFrontage  types.FlexBool    `json:"Violation for insufficient lot frontage"`
+	ViolationInsufficientOpenSpace    types.FlexBool    `json:"Violation for insufficient usable open space"`
+	ViolationInsufficientFrontYard    types.FlexBool    `json:"Violation for insufficient front yard"`
+	ViolationInsufficientSideYard     types.FlexBool    `json:"Violation for insufficient side yard"`
+	ViolationInsufficientRearYard     types.FlexBool    `json:"Violation for insufficient rear yard"`
+	ViolationExcessiveHeightStories   types.FlexBool    `json:"Violation for excessive height in stories"`
+	ViolationExcessiveHeightFeet      types.FlexBool    `json:"Violation for excessive height in feet"`
+	ViolationExcessiveHeightAlone     types.FlexBool    `json:"Violation for excessive height alone"`
+	ViolationExcessiveFloorAreaRatio  types.FlexBool    `json:"Violation for excessive floor area ratio"`
+	ByRight                           types.FlexBool    `json:"By right"`
+	ZoningDistrict                    string            `json:"Zoning district"`
+	Neighborhood                      string            `json:"Neighborhood"`
+	BoardOfAppealApplicationNumber    *string           `json:"Board of Appeal application number"`
+	ZoningBoardOfAppealDecisionLink   *string           `json:"Zoning Board of Appeal decision link"`
+	PlanningDeptRecommendationLink    *string           `json:"Planning Department recommendation link"`
+	ResubmittedPlansUnlikely          types.FlexBool    `json:"Resubmitted plans unlikely"`
+	ResubmittedPlansLikely            types.FlexBool    `json:"Resubmitted plans likely"`
+	XLongitude                        types.FlexFloat64 `json:"X longitude"`
+	YLatitude                         types.FlexFloat64 `json:"Y latitude"`
+	ParcelID                          string            `json:"Parcel ID"`
+	SamID                             string            `json:"SAM ID"`
+	ZipCode                           types.FlexZip     `json:"Zip code"`
+	CensusTract                       string            `json:"Census tract"`
+	CensusBlockGroup                  string            `json:"Census block group"`
+	GeomPoint4326                     *string           `json:"geom_point_4326"`
+}
+
 // CodeViolationRecord represents a single entry in the Code Enforcement - Building and Property Violations dataset
 type CodeViolationRecord struct {
 	ID              int               `json:"_id"`
