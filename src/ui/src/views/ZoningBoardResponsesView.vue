@@ -420,7 +420,7 @@ watch(selectedRecord, (newRecord) => {
     <div class="explorer-header">
       <h1>Zoning Board of Appeal Responses</h1>
       <p class="subtitle">Zoning permit applications and Board of Appeal decisions in Boston</p>
-      <button @click="helpModal.openHelpModal('Zoning Board of Appeal Responses', 'https://data.boston.gov/dataset/zoning-board-of-appeal-responses', 'Records of zoning permit applications, appeal outcomes, and code violations reviewed by the Boston Zoning Board of Appeal.')" class="help-btn">?</button>
+      <button @click="helpModal.openHelpModal('Zoning Board of Appeal Responses', 'https://data.boston.gov/dataset/zoning-reform-impact-tracker', 'Records of zoning permit applications, appeal outcomes, and code violations reviewed by the Boston Zoning Board of Appeals.')" class="help-btn">?</button>
     </div>
 
     <div class="stats-grid">
