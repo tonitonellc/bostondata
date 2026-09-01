@@ -6,10 +6,10 @@ import (
 )
 
 // FlexBool unmarshals the various boolean encodings used across Boston Data
-// Portal datasets: native JSON booleans, and the single-letter "t"/"f"
-// strings (plus "true"/"false") returned by datastore_search_sql, which casts
-// every Postgres column — booleans included — to text. Absent/null values
-// unmarshal to false, matching FlexFloat64's zero-value-on-null behavior.
+// Portal datasets: the single-letter "t"/"f" strings (plus "true"/"false")
+// returned by datastore_search_sql, which casts every Postgres column —
+// booleans included — to text. Absent/null values unmarshal to false,
+// matching FlexFloat64's zero-value-on-null behavior.
 type FlexBool bool
 
 func (fb *FlexBool) UnmarshalJSON(b []byte) error {
@@ -30,8 +30,10 @@ func (fb *FlexBool) UnmarshalJSON(b []byte) error {
 		return nil
 	}
 
-	// there's no bool fallback because this dataset isn't modified annually
+	// there's no bool fallback because Zoning Record dataset isn't modified annually
 	// and therefore will not have a schema change fromt `text` type
+	// in the future if there is a dataset that changed the data type from `text` to
+	// `boolean` then we can add the fallback
 
 	return nil
 }
