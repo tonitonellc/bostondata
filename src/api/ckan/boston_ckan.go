@@ -20,19 +20,20 @@ const (
 	BostonBaseURL = "https://data.boston.gov/api/3/action/datastore_search"
 	BostonSQLURL  = "https://data.boston.gov/api/3/action/datastore_search_sql"
 
-	EarningsResource         = "29b3544f-752a-4cb1-a6af-a1de153d20a0"
-	CrimeResource            = "b973d8cb-eeb2-4e7e-99da-c92938efc9c0"
-	FireResource             = "91a38b1f-8439-46df-ba47-a30c48845e06"
-	LobbyingResource         = "8d7f0cf4-4d20-4ed6-b6d0-bd6158d84ae9"
-	SpendingResource         = "d22fdd5c-7e4c-41b7-a3eb-dfc57a87b245"
-	SnowPlowingResource      = "2be28d90-3a90-4af1-a3f6-f28c1e25880a"
-	PoliceStopFriskResource  = "060526ca-ab4e-4da5-997c-1a4460bde5fd"
-	ThreeOneOneResource      = "254adca6-64ab-4c5c-9fc0-a6da622be185"
-	BuildingPermitResource   = "6ddcd912-32a0-43df-9908-63574f8c7e77"
-	FoodInspectionResource   = "4582bec6-2b4f-4f9e-bc55-cbaa73117f4c"
-	CodeViolationResource    = "90ed3816-5e70-443c-803d-9a71f44470be"
-	CannabisFacilityResource = "5de268d6-e3a5-4f5c-b43a-0d293b377b50"
-	UtilityBillResource      = "35fad26c-1400-46b0-846c-3bb6ca8f74d0"
+	EarningsResource            = "29b3544f-752a-4cb1-a6af-a1de153d20a0"
+	CrimeResource               = "b973d8cb-eeb2-4e7e-99da-c92938efc9c0"
+	FireResource                = "91a38b1f-8439-46df-ba47-a30c48845e06"
+	LobbyingResource            = "8d7f0cf4-4d20-4ed6-b6d0-bd6158d84ae9"
+	SpendingResource            = "d22fdd5c-7e4c-41b7-a3eb-dfc57a87b245"
+	SnowPlowingResource         = "2be28d90-3a90-4af1-a3f6-f28c1e25880a"
+	PoliceStopFriskResource     = "060526ca-ab4e-4da5-997c-1a4460bde5fd"
+	ThreeOneOneResource         = "254adca6-64ab-4c5c-9fc0-a6da622be185"
+	BuildingPermitResource      = "6ddcd912-32a0-43df-9908-63574f8c7e77"
+	FoodInspectionResource      = "4582bec6-2b4f-4f9e-bc55-cbaa73117f4c"
+	CodeViolationResource       = "90ed3816-5e70-443c-803d-9a71f44470be"
+	CannabisFacilityResource    = "5de268d6-e3a5-4f5c-b43a-0d293b377b50"
+	UtilityBillResource         = "35fad26c-1400-46b0-846c-3bb6ca8f74d0"
+	ZoningBoardResponseResource = "f9b736f2-60da-4240-b793-f9b498eb475e"
 )
 
 // httpClient is shared across all handlers. The custom Transport raises
@@ -101,6 +102,9 @@ func GetCannabisFacilityData(c *gin.Context) {
 }
 func GetUtilityBillData(c *gin.Context) {
 	handleDataRequest[models.UtilityBillRecord](c, UtilityBillResource)
+}
+func GetZoningBoardResponseData(c *gin.Context) {
+	handleDataRequest[models.ZoningBoardResponseRecord](c, ZoningBoardResponseResource)
 }
 
 func fetchSQLAndRespond[T any](c *gin.Context, query string) {

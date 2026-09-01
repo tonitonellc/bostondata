@@ -32,5 +32,6 @@ func RegisterRoutes(router *gin.Engine) {
 		apiGroup.GET("/boston-permits", api.GetBuildingPermitData)
 		apiGroup.GET("/boston-food", api.GetFoodInspectionData)
 		apiGroup.GET("/boston-violations", api.GetCodeViolationData)
+		apiGroup.GET("/boston-zoning", api.GetZoningBoardResponseData)
 	}
 }

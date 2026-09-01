@@ -106,6 +106,7 @@
       <CodeViolationsView     v-if="view === 'violations'" />
       <CannabisFacilitiesView v-if="view === 'cannabis'" />
       <EntertainmentLicensesView v-if="view === 'entertainment'" />
+      <ZoningBoardResponsesView v-if="view === 'zoning'" />
     </div>
 
     <TheFooter />
@@ -131,6 +132,7 @@ import PoliceStopsView from './views/PoliceStopsView.vue'
 import SpendingView from './views/SpendingView.vue'
 import ThreeOneOneView from './views/ThreeOneOneView.vue'
 import UtilityBillsView from './views/UtilityBillsView.vue'
+import ZoningBoardResponsesView from './views/ZoningBoardResponsesView.vue'
 
 const view = ref('home')
 
@@ -144,7 +146,7 @@ onMounted(() => {
     }
   } catch (e) {}
 
-  const validViews = ['home', 'explore-map', 'annual-reports', 'utili-see', 'lobbying', 'earnings', 'spending', 'crime', 'fire', 'threeoneone', 'snow', 'stops', 'permits', 'food', 'violations', 'cannabis', 'entertainment']
+  const validViews = ['home', 'explore-map', 'annual-reports', 'utili-see', 'lobbying', 'earnings', 'spending', 'crime', 'fire', 'threeoneone', 'snow', 'stops', 'permits', 'food', 'violations', 'cannabis', 'entertainment', 'zoning']
 
   const applyHash = () => {
     const hashStr = window.location.hash.replace('#', '')

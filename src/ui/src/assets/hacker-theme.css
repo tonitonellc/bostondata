@@ -153,6 +153,29 @@ body.dark-mode .instruction-text {
   color: #94a3b8;
 }
 
+body.dark-mode .record-detail {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+body.dark-mode .record-detail-label {
+  color: #94a3b8;
+}
+
+body.dark-mode .record-detail-value {
+  color: #f1f5f9;
+}
+
+body.dark-mode .violation-badge {
+  background: #3b1a1a;
+  color: #f87171;
+  border-color: #5c2626;
+}
+
+body.dark-mode .record-links a {
+  color: #93c5fd;
+}
+
 /* ── Tables ──────────────────────────────────────────────────────────────*/
 body.dark-mode .table-section,
 body.dark-mode .table-section-inner {
